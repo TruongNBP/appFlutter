@@ -1,0 +1,7 @@
+{
+    "workbench.activityBar.iconClickBehavior": "toggle",
+    "workbench.activityBar.location": "side",
+    "breadcrumbs.filePath": "on",
+    "editor.renderWhitespace": "selection",
+    "editor.wordWrap": "off"
+}
