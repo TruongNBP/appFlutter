@@ -15,4 +15,18 @@ class ApiRepository {
       rethrow;
     }
   }
+
+  static Future<List<WeatherDetail>> callApiGetWeatherDetail() async {
+    try {
+      final dio = Dio();
+    final res = await dio.get(
+        MyKey.apiLinkDetail);
+        List data = res.data['list'];
+        List<WeatherDetail> result = 
+        List<WeatherDetail>.from(data.map((e) => WeatherDetail.fromMap(e)).toList());
+        return result;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

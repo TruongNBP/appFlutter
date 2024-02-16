@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weather/page/home/home_page.dart';
+import 'package:weather/bottom_navigation_custom/bottom_custom.dart';
+// import 'package:weather/page/home/home_page.dart';
 import 'package:weather/providers/weather_provider.dart';
 
 class MyApp extends StatelessWidget {
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
       create: (_) => WeatherProvider(),
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomePage(),
+        home: BottomNavigationCustom(),
       ),
     );
   }

@@ -17,7 +17,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<WeatherProvider>().getWeatherCurrent();
   }
@@ -53,7 +52,6 @@ class _HomePageState extends State<HomePage> {
 
             WeatherData data = snapshot.data as WeatherData;
 
-            print(data.weather[0].main);
 
 
             return Column(
