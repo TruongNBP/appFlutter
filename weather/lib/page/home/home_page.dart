@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:weather/models/weather.dart';
 import 'package:weather/page/home/widgets/home_detail_weather.dart';
 import 'package:weather/page/home/widgets/home_location.dart';
 import 'package:weather/page/home/widgets/home_temperature.dart';
@@ -36,17 +37,38 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-        child: const Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            HomeWeatherIcon(),
-            HomeTemperature(),
-            HomeLocation(),
-            SizedBox(
-              height: 40,
-            ),
-            HomeDetailWeather(),
-          ],
+        child: FutureBuilder(
+          initialData: null,
+          future: context.read<WeatherProvider>().getWeatherCurrent(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (!snapshot.hasData) {
+              return Container(
+                alignment: Alignment.center,
+                child: const Text('Error'),
+              );
+            }
+
+            WeatherData data = snapshot.data as WeatherData;
+
+            print(data.weather[0].main);
+
+
+            return const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                HomeWeatherIcon(),
+                HomeTemperature(),
+                HomeLocation(),
+                SizedBox(
+                  height: 40,
+                ),
+                HomeDetailWeather(),
+              ],
+            );
+          },
         ),
       ),
     );

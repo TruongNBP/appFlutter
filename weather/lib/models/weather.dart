@@ -140,7 +140,7 @@ class WeatherData {
     return WeatherData(
       id: map['id'] as int,
       weather: List<Weather>.from(
-        (map['weather'] as List<int>).map<Weather>(
+        (map['weather'] as List).map<Weather>(
           (x) => Weather.fromMap(x as Map<String, dynamic>),
         ),
       ),
