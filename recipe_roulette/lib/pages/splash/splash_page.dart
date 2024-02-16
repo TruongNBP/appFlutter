@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:recipe_roulette/widgets/my_linear_gradient.dart';
+import 'package:recipe_roulette/pages/splash/widgets/my_linear_gradient.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -72,7 +72,7 @@ class SplashScreen extends StatelessWidget {
                     fontWeight: FontWeight.w600),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30),
           ],
         ),
