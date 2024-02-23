@@ -5,10 +5,10 @@ class CustomListTile extends StatelessWidget {
   final String subtitle;
   final VoidCallback? onTap;
   final VoidCallback? onTap1;
-  final Color color = Colors.black;
+  final Color color;
 
   const CustomListTile(
-      {super.key, required this.title, required this.subtitle, this.onTap, this.onTap1});
+      {super.key, required this.title, required this.subtitle, this.onTap, this.onTap1, this.color = Colors.black});
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +43,8 @@ class CustomListTile extends StatelessWidget {
             ),
             Row(
               children: [
-                IconButton(onPressed: onTap, icon: const Icon(Icons.delete)),
-                IconButton(onPressed: onTap1, icon: const Icon(Icons.done)),
+                IconButton(onPressed: onTap, icon: const Icon(Icons.delete, color: Colors.red,)),
+                IconButton(onPressed: onTap1, icon: Icon(Icons.done, color: color,)),
               ],
             ),
           ],

@@ -49,21 +49,17 @@ class TodosCubit extends Cubit<TodosState> {
     });
   }
 
-  void updateTodoStatus(String id) {
-    emit(TodosLoading()); // Kích hoạt trạng thái loading
-
-    // Gọi phương thức API để cập nhật trạng thái của todo
-    ApiServices.updateTodoStatus(id).then((updatedTodo) {
-      if (updatedTodo != null) {
-        // Nếu cập nhật thành công, emit một trạng thái mới với todo đã được cập nhật
-        emit(TodosLoaded(updatedTodo));
+  void updateTodoByID(String id, String title, String description) {
+    emit(TodosLoading());
+    // Gọi API để thêm todo mới
+    ApiServices.updateTodo(id, title, description).then((success) {
+      if (success) {
+        getDetails();
       } else {
-        // Nếu có lỗi xảy ra trong quá trình cập nhật, emit một trạng thái lỗi
-        emit(TodosError('Failed to update todo status'));
+        emit(TodosError('Failed to update new todo.'));
       }
     }).catchError((error) {
-      // Xử lý các lỗi không mong muốn
-      emit(TodosError(error.toString()));
+      emit(TodosError('Error: $error'));
     });
   }
 }

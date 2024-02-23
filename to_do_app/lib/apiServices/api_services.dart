@@ -45,28 +45,22 @@ class ApiServices {
     }
   }
 
-  static Future<TodosModel?> updateTodoStatus(String id) async {
+  static Future<bool> updateTodo(
+      String id, String title, String description) async {
     String url = 'https://api.nstack.in/v1/todos/$id';
-
-    // Tạo dữ liệu body để gửi lên API để cập nhật trạng thái todo
-    Map<String, dynamic> body = {
-      'is_completed': true, // Cập nhật trạng thái is_completed thành true
-    };
-
-    var response = await http.put(
-      Uri.parse(url),
-      body: jsonEncode(body),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    );
+    final body = jsonEncode(
+        {"title": title, "description": description, "is_completed": true});
+    final response = await http.put(Uri.parse(url), body: body, 
+    headers: {
+      'Content-Type': 'application/json',
+    });
 
     if (response.statusCode == 200) {
-      // Nếu cập nhật thành công, trả về todo đã được cập nhật
-      return TodosModel.fromJson(jsonDecode(response.body));
+      // Kiểm tra kết quả từ API và trả về true nếu thành công
+      return true;
     } else {
-      // Nếu có lỗi xảy ra, trả về null
-      return null;
+      // Trả về false nếu có lỗi từ API
+      return false;
     }
   }
 }

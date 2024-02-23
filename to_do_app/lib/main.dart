@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_app/cubit/todos_cubit.dart';
-import 'package:to_do_app/screens/todo_list_completed_screen.dart';
-import 'package:to_do_app/screens/todo_list_screen.dart';
+import 'package:to_do_app/router/router.dart';
 
 void main(){
   runApp(const MyApp());
@@ -14,9 +13,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => TodosCubit(),
-      child: const MaterialApp(
+      child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
-        home: TodoListScreen(),
+        routerConfig: RouterCustom.router,
         // home: TodoListCompletedScreen(),
       ),
     );

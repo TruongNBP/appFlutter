@@ -49,6 +49,7 @@ class _TodoListCompletedScreenState extends State<TodoListCompletedScreen> {
                     .toList();
                 final element = completedTodos[index];
                 return CustomListTile(
+                  color: Colors.green,
                   title: element.title!,
                   subtitle: element.description!,
                   onTap: () {

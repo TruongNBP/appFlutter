@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:to_do_app/cubit/todos_cubit.dart';
 import 'package:to_do_app/widgets/list_todos.dart';
 
@@ -60,7 +61,6 @@ class _TodoListScreenState extends State<TodoListScreen> {
                     ElevatedButton(
                       onPressed: () {
                         _addNewTodo();
-                        Navigator.of(context).pop();
                       },
                       child: const Text('Add Todo'),
                     ),
@@ -86,32 +86,52 @@ class _TodoListScreenState extends State<TodoListScreen> {
             );
           }
           if (state is TodosLoaded) {
-            return ListView.builder(
-              itemCount: state.todosModel.items!
-                  .where((element) => !element.isCompleted)
-                  .length,
-              itemBuilder: (context, index) {
-                final completedTodos = state.todosModel.items!
-                    .where((element) => !element.isCompleted)
-                    .toList();
-                final element = completedTodos[index];
-                return CustomListTile(
-                  title: element.title!,
-                  subtitle: element.description!,
-                  onTap: () {
-                    context
-                        .read<TodosCubit>()
-                        .deleteTodoById(state.todosModel.items![index].sId!);
-                  },
-                  onTap1: () {context.read<TodosCubit>().updateTodoStatus(state.todosModel.items![index].sId!);
-                  },
-                );
-              },
+            return Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: state.todosModel.items!
+                        .where((element) => !element.isCompleted)
+                        .length,
+                    itemBuilder: (context, index) {
+                      final completedTodos = state.todosModel.items!
+                          .where((element) => !element.isCompleted)
+                          .toList();
+                      final element = completedTodos[index];
+                      return CustomListTile(
+                        color: Colors.grey,
+                        title: element.title!,
+                        subtitle: element.description!,
+                        onTap: () {
+                          context
+                              .read<TodosCubit>()
+                              .deleteTodoById(element.sId!);
+                        },
+                        onTap1: () {
+                          _updateTodo(element.sId!, element.title!,
+                              element.description!);
+                        },
+                      );
+                    },
+                  ),
+                ),
+                // ElevatedButton(
+                //   onPressed: () => context.go('/completed'),
+                //   child: const Text('List Completed'),
+                // ),
+              ],
             );
           }
-          return SizedBox();
+          return const SizedBox();
         },
       ),
+      floatingActionButton: 
+          FloatingActionButton(
+            backgroundColor: Colors.grey,
+                  onPressed: () => context.go('/completed'),
+                  child: const Icon(Icons.arrow_forward),
+                ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 
@@ -121,6 +141,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
     if (title.isNotEmpty && description.isNotEmpty) {
       // Gửi thông tin todo mới lên Cubit để xử lý
       context.read<TodosCubit>().addNewTodo(title, description);
+      Navigator.of(context).pop();
       // Xóa nội dung của TextField sau khi thêm todo
       _titleController.clear();
       _descriptionController.clear();
@@ -131,5 +152,12 @@ class _TodoListScreenState extends State<TodoListScreen> {
         ),
       );
     }
+  }
+
+  void _updateTodo(String sId, String sTitle, String sDescription) {
+    final id = sId;
+    final title = sTitle;
+    final description = sDescription;
+    context.read<TodosCubit>().updateTodoByID(id, title, description);
   }
 }
