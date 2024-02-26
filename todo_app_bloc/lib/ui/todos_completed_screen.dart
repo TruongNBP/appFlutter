@@ -13,7 +13,6 @@ class CompletedScreen extends StatefulWidget {
 }
 
 class _CompletedScreenState extends State<CompletedScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -24,23 +23,34 @@ class _CompletedScreenState extends State<CompletedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Completed Todos'),
+        title: const Text('Công việc đã hoàn thành'),
       ),
       body: BlocBuilder<TodoBloc, TodoStates>(
         builder: (context, state) {
           switch (state.todoStatus) {
             case TodoStatus.loading:
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             case TodoStatus.failure:
               return Text(state.message.toString());
             case TodoStatus.success:
               return ListView.builder(
-                itemCount: state.todoList.length,
+                itemCount: state.todoList
+                    .where((todo) =>
+                        todo.items != null &&
+                        todo.items!.isNotEmpty &&
+                        todo.items!.first.isCompleted == true)
+                    .length,
                 itemBuilder: (context, index) {
-                  final item = state.todoList[index];
+                  final todo = state.todoList
+                      .where((todo) =>
+                          todo.items != null &&
+                          todo.items!.isNotEmpty &&
+                          todo.items!.first.isCompleted == true)
+                      .toList()[index];
+                  final firstItem = todo.items!.first;
                   return ListTile(
-                    title: Text(item.items![index].title!),
-                    subtitle: Text(item.items![index].description!),
+                    title: Text(firstItem.title ?? 'Không có tiêu đề'),
+                    subtitle: Text(firstItem.description ?? 'Không có mô tả'),
                   );
                 },
               );

@@ -10,9 +10,9 @@ part 'todos_state.dart';
 class TodosCubit extends Cubit<TodosState> {
   TodosCubit() : super(TodosInitial());
 
-  getDetails() {
+  getDetails() async{
     emit(TodosLoading());
-    ApiServices.getData().then((value) {
+    await ApiServices.getData().then((value) {
       emit(TodosLoaded(value!));
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -39,10 +39,10 @@ class TodosCubit extends Cubit<TodosState> {
     emit(TodosLoading());
     ApiServices.deleteTodoById(todoId).then((success) {
       if (success) {
-        // Nếu thêm thành công, cập nhật trạng thái
+        // Nếu xoá thành công, cập nhật trạng thái
         getDetails();
       } else {
-        emit(TodosError('Failed to add new todo.'));
+        emit(TodosError('Failed to delete todo.'));
       }
     }).onError((error, stackTrace) {
       emit(TodosError(error.toString()));

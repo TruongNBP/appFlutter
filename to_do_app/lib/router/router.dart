@@ -16,7 +16,7 @@ class RouterCustom {
         GoRoute(
           path: 'completed',
           builder: (BuildContext context, GoRouterState state) {
-            return const TodoListCompletedScreen();
+            return const CompletedScreen();
           },
         ),
       ],

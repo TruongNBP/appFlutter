@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:to_do_app/bloc/todos_bloc.dart';
+import 'package:to_do_app/bloc/todos_event.dart';
 import 'package:to_do_app/cubit/todos_cubit.dart';
 import 'package:to_do_app/widgets/list_todos.dart';
 
@@ -72,7 +74,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
       ),
       body: BlocConsumer<TodosCubit, TodosState>(
         listener: (context, state) {
-          print(state);
+          // print(state);
         },
         builder: (context, state) {
           if (state is TodosLoading) {
@@ -128,7 +130,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
       floatingActionButton: 
           FloatingActionButton(
             backgroundColor: Colors.grey,
-                  onPressed: () => context.go('/completed'),
+                  onPressed: () {context.go('/completed');context.read<TodoBloc>().add(TodoFetched());} ,
                   child: const Icon(Icons.arrow_forward),
                 ),
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

@@ -12,10 +12,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => TodoBloc()),
-      ],
+    return BlocProvider(create: (_) => TodoBloc(),
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
