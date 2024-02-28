@@ -11,7 +11,7 @@ class TodoStates extends Equatable {
     this.todoStatus = TodoStatus.loading,
     this.todoList = const <TodosModel>[],
     this.message ='',
-});
+  });
 
 TodoStates copyWith({TodoStatus? todoStatus, List<TodosModel>? todoList, String? message}){
   return TodoStates(
