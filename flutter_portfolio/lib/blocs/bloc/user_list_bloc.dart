@@ -23,7 +23,11 @@ class UserListBloc extends Bloc<UserListEvent, UserListState> {
   }
 
   void _updateUser(UpdateUser event, Emitter<UserListState> emit){
-    state.users[state.users.indexWhere((element) => element.id == event.user.id)] = event.user;
+    for (var i = 0; i < state.users.length; i++) {
+      if (event.user.id == state.users[i].id) {
+        state.users[i] = event.user;
+      }
+    }
     emit(UserListUpdated(users: state.users));
   }
 }
